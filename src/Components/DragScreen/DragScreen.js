@@ -37,6 +37,7 @@ render(){
         <>
         {JSON.stringify(this.state)}
         {
+            this.state.boxes.length > 0 ?
             this.state.boxes.map((box)=>
                 <Draggable
                 onStop={(e,data)=>this.handleEvent(e, data, box.id)}
@@ -52,7 +53,9 @@ render(){
                         </span>
                     </div>
                 </Draggable>
-                )
+                ):
+                <>
+                </>
         }
     </>
     )
