@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 
 //position
-const setPosition = (state = [{id:0, name:'test', x:1, y:10},{id:1, name:'box2', x:50, y:100}], action) => {
+const setPosition = (state = [{id:0, name:'test', x:1, y:10, color:'green'},{id:1, name:'box2', x:50, y:100, color:'red'},{id:3, name:'id 3', x:1, y:10, color:'yellow'},{id:2, name:'I\'m also a test', x:50, y:100, color:'blue'}], action) => {
   switch (action.type) {
       case 'SET_POSITION':
           return action.payload;
