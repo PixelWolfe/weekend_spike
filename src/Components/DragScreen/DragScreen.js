@@ -3,17 +3,6 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import {connect} from 'react-redux';
 
-
-// <Draggable
-// onStop={this.handleEvent}
-// defaultPosition={{x: this.state.x, y: this.state.y}}
-// >
-//     <div className="drag-box">
-//         <span>{JSON.stringify(this.state)}</span>
-//     </div>
-// </Draggable> 
-
-
 class DragScreen extends React.Component {
     state = {
         boxes: this.props.reduxState.setPosition
@@ -26,18 +15,25 @@ class DragScreen extends React.Component {
         console.log('elems', elems)
         console.log('elems length', elems.length)
         for(let i = 0; i < elems.length; i++) {
-
-        zIndexArray.push({index: i, zIndex:elems[i].style.zIndex})
-            console.log('current item zIndex before update', elems[i].style.zIndex);
-          elems[i].style.position = 'relative'
-          elems[i].style.zIndex = 1;
-          e.currentTarget.style.zIndex = 2;
-          console.log('current item zIndex after update', elems[i].style.zIndex);
+          elems[i].style.position = 'relative';
+          console.log('zIndex',elems[i].style.zIndex)
+          if(elems[i].style.zIndex === '' || elems[i].style.zIndex === 0){
+              elems[i].style.zIndex = i + 1;
+          }
+          zIndexArray.push({index: i, zIndex:elems[i].style.zIndex})
         }
+        console.log('zIndex Array before', zIndexArray)
+        zIndexArray.sort((a,b)=>a.zIndex - b.zIndex);
+        console.log('zIndex Array after', zIndexArray)
 
-        zIndexArray.sort((a,b)=>(a.zIndex > b.zIndex)?1:-1);
-        console.log(zIndexArray.pop())
+        const highestZIndex = zIndexArray.pop()
+        console.log('before', e.currentTarget.style.zIndex)
+        if(Number(e.currentTarget.style.zIndex) !== Number(highestZIndex.zIndex)){
+            e.currentTarget.style.zIndex = Number(highestZIndex.zIndex) + 1;
+        }
+        console.log('after', e.currentTarget.style.zIndex)
 
+        console.log('highest zindex', e.currentTarget.style.zIndex);
       }
 
       handleEvent = (e, data, index) => {
